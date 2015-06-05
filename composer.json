@@ -1,0 +1,17 @@
+{
+    "name": "its-web-wordpress/youtube-display-plugin",
+    "description": "Provides an example of how to setup a wordpress project.",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Greg Marshall",
+            "email": "gmarsh@truman.edu"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ExamplePlugin\\": "src"
+        }
+    }
+}
