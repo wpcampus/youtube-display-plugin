@@ -3,6 +3,9 @@ namespace TrumanYouTubePlugin;
 
 class TrumanYouTube
 {
+    const APIKEY = 'AIzaSyCbstE__HeWazle17lK2tn9OAkf3QkNuys';
+    const PART  = 'id%2Csnippet';
+
     public function __construct()
     {
         add_action('init', array($this, 'add_truman_youtube_stylesheet'));
@@ -19,48 +22,43 @@ class TrumanYouTube
 
     public function truman_youtube_shortcode($atts)
     {
-
         ob_start();
         extract( shortcode_atts( array (
-            'feedurl' => '',
+            'playlistid' => '',
             'random' => 'true',
         ), $atts ) );
 
-
-        // read feed into SimpleXML object
-        $sxml = simplexml_load_file($feedurl);
+        $feedurl = sprintf("https://www.googleapis.com/youtube/v3/playlistItems?part=%s&playlistId=%s&key=%s", $this::PART, $playlistid, $this::APIKEY);
+        $response = wp_remote_get(
+            $feedurl,
+            array(
+                'method' => 'GET',
+                'timeout' => 45,
+                'redirection' => 5,
+                'httpversion' => '1.0',
+                'blocking' => true,
+                'headers' => array()
+            )
+        );
+        $json = json_decode($response['body']);
         $items = array();
 
         // iterate over entries in feed
-        foreach ($sxml->entry as $entry) {
+        foreach ($json->items as $entry) {
             $item = array();
-            // get nodes in media: namespace for media information
-            $media = $entry->children('http://search.yahoo.com/mrss/');
+            $id = $entry->snippet->resourceId->videoId;
+            $watch = sprintf("https://www.youtube.com/watch?v=%s&index=1&list=%s", $id, $playlistid);
+            $thumbnails = (array)$entry->snippet->thumbnails;
 
-            // get video player URL
-            $attrs = $media->group->player->attributes();
-            if ($attrs) {
-                $watch = $attrs['url'];
+            $thumbnail = array_pop($thumbnails)->url;
 
-                // url is in this format http://www.youtube.com/watch?v=2Fsai0AmDeA&feature=youtube_gdata_player
-                // we need to reformat to http://www.youtube.com/v/2Fsai0AmDeA&fs=1&autoplay=1  so it will do the full screen thing
-                //$watch = str_replace("watch?v=", "v/", $watch);
-                $watch = str_replace("&feature=youtube_gdata_player", "", $watch);
-                $id = str_replace("http://www.youtube.com/watch?v=", "", $attrs['url']);
-                $id = str_replace("&feature=youtube_gdata_player", "", $id);
-
-                // get video thumbnail
-                $attrs = $media->group->thumbnail[0]->attributes();
-                //$thumbnail = str_replace("0.jpg", "mqdefault.jpg", $attrs['url']);
-                $thumbnail = str_replace("0.jpg", "maxresdefault.jpg", $attrs['url']);
-
-                $item['thumbnail'] = $thumbnail;
-                $item['watch'] = $watch;
-                $item['id'] = $id;
-                $item['title'] = $media->group->title;
-                $items[] = $item;
-            }
+            $item['thumbnail'] = $thumbnail;
+            $item['watch'] = $watch;
+            $item['id'] = $id;
+            $item['title'] = $entry->snippet->title;
+            $items[] = $item;
         }
+
         if ($random === 'true') {
             shuffle($items);
         }
