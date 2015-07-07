@@ -28,7 +28,7 @@ class TrumanYouTube
             'random' => 'true',
         ), $atts ) );
 
-        $feedurl = sprintf("https://www.googleapis.com/youtube/v3/playlistItems?part=%s&playlistId=%s&key=%s", $this::PART, $playlistid, $this::APIKEY);
+        $feedurl = sprintf("https://www.googleapis.com/youtube/v3/playlistItems?part=%s&playlistId=%s&key=%s&maxResults=50", $this::PART, $playlistid, $this::APIKEY);
         $response = wp_remote_get(
             $feedurl,
             array(
