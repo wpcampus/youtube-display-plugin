@@ -47,7 +47,7 @@ class TrumanYouTube
         foreach ($json->items as $entry) {
             $item = array();
             $id = $entry->snippet->resourceId->videoId;
-            $watch = sprintf("https://www.youtube.com/watch?v=%s&index=1&list=%s", $id, $playlistid);
+            $watch = sprintf("https://www.youtube.com/watch?v=%s", $id);
             $thumbnails = (array)$entry->snippet->thumbnails;
 
             $thumbnail = array_pop($thumbnails)->url;
