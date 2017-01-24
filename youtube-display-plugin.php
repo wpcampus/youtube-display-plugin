@@ -14,8 +14,6 @@
  */
 class TrumanYouTube {
 
-	const PART  = 'id%2Csnippet';
-
 	public function __construct() {
 		add_action( 'init', array( $this, 'add_shortcodes' ) );
 		add_action( 'admin_menu', array( $this, 'add_admin_page' ) );
@@ -38,15 +36,21 @@ class TrumanYouTube {
 		wp_enqueue_script( 'magnific-popup', plugins_url( 'assets/js/jquery.magnific-popup.min.js', __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'truman_youtube_script', plugins_url( 'assets/js/truman_youtube_display.js', __FILE__ ), array( 'jquery' ) );
 
+		// Check the transient first.
 		$transient_name = 'youtube_json_' . md5( $args['playlistid'] );
-		//if ( false === ( $json = get_transient( $transient_name ) ) ) {
+
+		// Get the items from the transient.
+		$youtube_items = get_transient( $transient_name );
+
+		// If transient isnt' valid, ping YouTube.
+		if ( false === $youtube_items ) {
 
 			// Build the YouTube feed URL.
 			$youtube_feed_url = add_query_arg( array(
-				'part' => $this::PART,
-				'playlistId' => $args['playlistid'],
-				'key' => esc_attr( get_option( 'api_key' ) ),
-				'maxResults' => '50',
+				'part' 			=> 'id%2Csnippet',
+				'playlistId' 	=> $args['playlistid'],
+				'key' 			=> esc_attr( get_option( 'youtube_display_api_key' ) ),
+				'maxResults' 	=> '50',
 			), 'https://www.googleapis.com/youtube/v3/playlistItems' );
 
 			// Get the response.
@@ -62,28 +66,29 @@ class TrumanYouTube {
 				)
 			);
 
-			// Get the response code
+			// Get the response code.
 			$response_code = wp_remote_retrieve_response_code( $response );
-			$response_body = wp_remote_retrieve_body( $response );
 
-			echo "<pre>";
-			print_r($response_code);
-			echo "</pre>";
+			// No point in continuing if not valid response.
+			if ( 200 != $response_code ) {
+				return;
+			}
 
-			echo "<pre>";
-			print_r($response_body);
-			echo "</pre>";
+			// Get the response body.
+			$youtube_items = wp_remote_retrieve_body( $response );
 
-			//$response_body = json_decode( $response_body );
+			$youtube_items = json_decode( $youtube_items );
 
-			//set_transient( $transient_name, $response_body, 1 * HOUR_IN_SECONDS );
+			// Store response in transient for an hour.
+			set_transient( $transient_name, $youtube_items, 1 * HOUR_IN_SECONDS );
 
-		//}
+		}
 
+		// Build the items.
 		$items = array();
 
 		// iterate over entries in feed
-		foreach ( $response_body->items as $entry ) {
+		foreach ( $youtube_items->items as $entry ) {
 
 			$id = $entry->snippet->resourceId->videoId;
 			$watch = sprintf( 'https://www.youtube.com/watch?v=%s', $id );
@@ -106,7 +111,7 @@ class TrumanYouTube {
 
 		$itemcounter = 0;
 
-		$layoutstring = get_option( 'layout_json' );
+		$layoutstring = get_option( 'youtube_display_layout_json' );
 
 		$sizearray = json_decode( $layoutstring );
 
@@ -190,8 +195,8 @@ class TrumanYouTube {
 				do_settings_sections( 'truman_youtube_display' );
 
 				?>
-				<p><label for="api_key">YouTube API Key</label> <input type="text" name="api_key" id="api_key" value="<?php echo esc_attr( get_option( 'api_key' ) ); ?>" size="50"/></p>
-				<p><label for="layout_json">Layout JSON</label> <textarea name="layout_json" id="layout_json" style="width: 100%; height: 300px"><?php echo esc_attr( get_option( 'layout_json' ) ); ?></textarea></p>
+				<p><label for="youtube_display_api_key">YouTube API Key</label> <input type="text" name="youtube_display_api_key" id="youtube_display_api_key" value="<?php echo esc_attr( get_option( 'youtube_display_api_key' ) ); ?>" size="50"/></p>
+				<p><label for="youtube_display_layout_json">Layout JSON</label> <textarea name="youtube_display_layout_json" id="youtube_display_layout_json" style="width: 100%; height: 300px"><?php echo esc_attr( get_option( 'youtube_display_layout_json' ) ); ?></textarea></p>
 				<?php submit_button(); ?>
 			</form>
 			<p>Sample Layout JSON:</p>
@@ -227,8 +232,8 @@ class TrumanYouTube {
 	}
 
 	function register_settings() {
-		register_setting( 'truman_youtube_display', 'api_key' );
-		register_setting( 'truman_youtube_display', 'layout_json' );
+		register_setting( 'truman_youtube_display', 'youtube_display_api_key' );
+		register_setting( 'truman_youtube_display', 'youtube_display_layout_json' );
 	}
 }
 new TrumanYouTube();
