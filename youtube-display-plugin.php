@@ -123,7 +123,7 @@ class TrumanYouTube {
 			foreach ( $sizearray as $key => $jsons ) {
 
 				?>
-				<div class="row">
+				<div class="wpc-youtube">
 					<?php
 
 					foreach ( $jsons as $key => $value ) :
@@ -132,14 +132,12 @@ class TrumanYouTube {
 							$item = $items[ $itemcounter ];
 
 							?>
-							<div class="<?php echo $value->vidclass; ?>">
-								<div class="vid">
-									<a class="popup-youtube" href="<?php echo $item['watch']; ?>">
-										<img src="<?php echo $item['thumbnail']; ?>" alt="youtube thumbnail" />
-										<span class="play"></span>
-										<span class="vid-caption <?php echo $value->captionclass; ?>"><?php echo $item['title']; ?></span>
-									</a>
-								</div>
+							<div class="wpc-youtube-video <?php echo $value->vidclass; ?>">
+								<a class="popup-youtube" href="<?php echo $item['watch']; ?>">
+									<img src="<?php echo $item['thumbnail']; ?>" alt="YouTube thumbnail for <?php echo $item['title']; ?> video" />
+									<span class="play"></span>
+									<span class="vid-caption <?php echo $value->captionclass; ?>"><?php echo $item['title']; ?></span>
+								</a>
 							</div>
 							<?php
 
