@@ -1,25 +1,21 @@
-/*
-Reference: http://avexdesigns.com/responsive-youtube-embed/
-*/
-
+/* Reference: http://avexdesigns.com/responsive-youtube-embed/ */
 
 .vid {
-    position: relative; 
-    padding-bottom: 56.25%;
-    padding-top: 30px; height: 0; overflow: hidden;
+	position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 30px; height: 0; overflow: hidden;
 }
- 
+
 .vid iframe,
 .vid object,
 .vid embed,
 .vid img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
-
 
 .vid span.play {
 	position: relative;
@@ -35,10 +31,17 @@ Reference: http://avexdesigns.com/responsive-youtube-embed/
 
 .vid .vid-caption {
 	position: absolute;
+<<<<<<< HEAD:css/truman_youtube_display.css
 	bottom: 0px;
 	left: 0px;
 	color: #999;
 	text-align: center;
+=======
+	bottom: 0;
+	left: 0;
+	color: #ffffff;
+	text-align: left;
+>>>>>>> origin/rachel:assets/css/truman_youtube_display.css
 	padding: 5px;
 	width: 100%;
 	font-size: .5em !important;
@@ -48,6 +51,7 @@ Reference: http://avexdesigns.com/responsive-youtube-embed/
 .vid:hover .play {
 	opacity: 1;
 	filter:alpha(opacity=100);
+<<<<<<< HEAD:css/truman_youtube_display.css
 }
 
 /* Maryann css */
@@ -78,3 +82,6 @@ Reference: http://avexdesigns.com/responsive-youtube-embed/
 
 .col-md-8 { width: 95%; float: left; border: 1px solid #999; margin: 3px; }
 }
+=======
+}
+>>>>>>> origin/rachel:assets/css/truman_youtube_display.css

@@ -1,5 +1,5 @@
 # Truman YouTube Display
-This plugin uses a shortcode to displaly a YouTube playlist in a customizable layout.
+This plugin uses a shortcode to display a YouTube playlist in a customizable layout.
 
 ## Initialization
 After installing the plugin, you must run 
