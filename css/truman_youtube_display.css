@@ -37,10 +37,11 @@ Reference: http://avexdesigns.com/responsive-youtube-embed/
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
-	color: #ffffff;
-	text-align: left;
+	color: #999;
+	text-align: center;
 	padding: 5px;
 	width: 100%;
+	font-size: .5em !important;
 	font-weight: normal !important;
 }
 
@@ -49,3 +50,31 @@ Reference: http://avexdesigns.com/responsive-youtube-embed/
 	filter:alpha(opacity=100);
 }
 
+/* Maryann css */
+
+.col-md-4 { width: 32%; float: left; border: 1px solid #999; margin: 3px;}
+
+.col-md-8 { width: 32%; float: left; border: 1px solid #999; margin: 3px; }
+
+
+@media screen and (max-width: 980px) {
+.row { width: 100% !Important; }
+.col-md-4 { width: 45%; float: left; border: 1px solid #999; margin: 3px;}
+
+.col-md-8 { width: 45%; float: left; border: 1px solid #999; margin: 3px; }
+}
+
+/* for 700px or less */
+@media screen and (max-width: 600px) {
+.col-md-4 { width: 95%; float: left; border: 1px solid #999; margin: 3px;}
+
+.col-md-8 { width: 95%; float: left; border: 1px solid #999; margin: 3px; }
+
+}
+
+/* for 480px or less */
+@media screen and (max-width: 480px) {
+.col-md-4 { width: 95%; float: left; border: 1px solid #999; margin: 3px;}
+
+.col-md-8 { width: 95%; float: left; border: 1px solid #999; margin: 3px; }
+}
