@@ -1,6 +1,6 @@
 {
     "name": "its-web-wordpress/youtube-display-plugin",
-    "description": "Provides an example of how to setup a wordpress project.",
+    "description": "Displays your YouTube videos.",
     "minimum-stability": "stable",
     "license": "proprietary",
     "authors": [
@@ -9,9 +9,14 @@
             "email": "gmarsh@truman.edu"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "TrumanYouTubePlugin\\": "src"
-        }
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*",
+        "wp-coding-standards/wpcs": "*"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "./vendor/bin/phpcs --config-set bin vendor/bin/phpcs",
+            "./vendor/bin/phpcs --config-set installed_paths ../../wp-coding-standards/wpcs"
+        ]
     }
 }
