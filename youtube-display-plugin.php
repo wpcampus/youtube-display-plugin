@@ -3,7 +3,7 @@
  * Plugin Name: Truman YouTube Display
  * Plugin URI: http://its.truman.edu
  * Description: Provides an example plugin to build off of.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Greg Marshall
  * Author URI: http://its.truman.edu
  * License: Proprietary

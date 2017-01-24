@@ -1,29 +1,22 @@
-function showModalVideo(videoId) {
-    
-    var modal = jQuery('#modal');
-    
-    modal.find('iframe').attr('src','http://www.youtube.com/embed/'+ videoId +'?autoplay=1');
-    
-    modal.modal('show');
-    
-    modal.on('hidden.bs.modal', function () {
-           console.log('testee'); 
-           modal.find('iframe').attr('src', '');
-        });
-}
-
 jQuery(document).ready(function(){
-    
-        jQuery('.vid a').each(function(){
-        
-        var anchor = jQuery(this);
-        
-        anchor.on('click',function(e){
-            
-            e.preventDefault();
-            
-            showModalVideo(anchor.attr('href'));
-        });
+    jQuery('.vid').each(function(){
+        var image = jQuery(this).find('img');
+        console.log(image);
+        console.log(image.height());
+        jQuery(this).find('.play').css("border-top-width", image.height()*.1);
+        jQuery(this).find('.play').css("border-bottom-width", image.height()*.1);
+        jQuery(this).find('.play').css("border-left-width", image.height()*.20);
+        jQuery(this).find('.play').css("top", image.height()*.30);
+        jQuery(this).find('.vid-caption').css("font-size", image.height()*.08);
+    });
+
+    jQuery('.popup-youtube').magnificPopup({
+        disableOn: 700,
+        type: 'iframe',
+        mainClass: 'mfp-fade',
+        removalDelay: 160,
+        preloader: false,
+
+        fixedContentPos: false
     });
 });
-

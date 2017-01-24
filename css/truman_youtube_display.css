@@ -2,6 +2,7 @@
 Reference: http://avexdesigns.com/responsive-youtube-embed/
 */
 
+
 .vid {
     position: relative; 
     padding-bottom: 56.25%;
@@ -18,12 +19,20 @@ Reference: http://avexdesigns.com/responsive-youtube-embed/
     width: 100%;
     height: 100%;
 }
-.vid i {
-	position: absolute;
+
+
+.vid span.play {
+	position: relative;
+	display: block;
 	left: 45%;
 	opacity: .7;
 	filter:alpha(opacity=70);
-}	
+	cursor: pointer;
+	border-style: solid;
+	border-width: 20px 0 20px 40px;
+	border-color: transparent transparent transparent white;
+}
+
 .vid .vid-caption {
 	position: absolute;
 	bottom: 0px;
@@ -32,44 +41,11 @@ Reference: http://avexdesigns.com/responsive-youtube-embed/
 	text-align: left;
 	padding: 5px;
 	width: 100%;
+	font-weight: normal !important;
 }
-.contentLinks .vid a {
-	font-weight: normal;
-}
-.vid:hover i {
+
+.vid:hover .play {
 	opacity: 1;
 	filter:alpha(opacity=100);
 }
-.eightcol .vid i, .sixcol .vid i, .fourcol .vid i {
-	font-size: 3em;
-	top: 25%;
-}
-.eightcol .vid-caption, .sixcol .vidvidcaption, .fourcol .vid-caption {
-	font-size: 1em;
-}
 
-@media all and (min-width: 600px){	
-
-	.eightcol .vid i {
-		font-size: 4em;
-		top: 35%;
-	}
-	.sixcol .vid i {
-		font-size: 3em;
-		top: 32%;
-	}
-	.fourcol .vid i {
-		font-size: 2em;
-		top: 30%;
-	}
-
-	.eightcol .vid-caption {
-		font-size: 2em;
-	}
-	.sixcol .vid-caption {
-		font-size: 1.5em;
-	}
-	.fourcol .vid-caption {
-		font-size: 1em;
-	}
-}

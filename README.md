@@ -1,44 +1,57 @@
-# Example Package
-This package should get you started creating plugins for wordpress.
+# Truman YouTube Display
+This plugin uses a shortcode to displaly a YouTube playlist in a customizable layout.
 
 ## Initialization
-To begin development change the following items:
-* build/phpdox.xml - update project name
-* src/Example.php - rename file, update class name, update namespace
-* tests/Bootstrap.php - update namespace
-* tests/phpunit.xml - update testsuite name, update testsuite directory
-* tests/ExamplePluginTest - rename directory
-* tests/ExamplePluginTest/ExampleTest.php - rename file, update class name, update namespace
-* build.xml - update project name
-* composer.json - update name, description, authors, autoload
-* example.php - rename file, update plugin name and associated comment block fields, update object instantiation
-
-Now build to you heart's content!
-
-## Deployment
-After you have developed your plugin there are a couple of things you will need to do to prepare for deployment.
-First, make sure you have a repository dedicated to your project on the GitLab server. Make sure you have pushed all
-of your work up to the repository. Now you will need to create a job on the Jenkins CI server for your project. When
-creating the job copy the `php-template` then uncheck `Disable Build`, setup the `Source Code Management` section,
-enable `Build Triggers->Trigger builds remotely`, provide an `Authentication Token`,
-then add a post-build action `Send build artifacts over SSH`. Select the server you will be deploying to,
-set the source files to `**/` and set the remote directory as the plugin's directory name. You can deploy to as many
-servers as you wish to setup. If you do not want to deploy the project but do want to build it just leave out the
-`Send build artifacts over SSH` post-build action. Before leaving take note of the remote build URL under the
-`Authentication Token` field you filled out previously.
-
-Now that the Jenkins job is setup head over to your project's repo. Under `Settings->Web Hooks` put in the remote
-build URL you took note of back on the Jenkins job configuration screen substituting `JENKINS_URL` with `http://ci
-.truman.edu` and `TOKEN_NAME` with the token you put in the `Authentication Token` field. Click on `Test Hook` to
-check it all out. Over on Jenkins you should see your project build and if you configured the deployment section you
-will see your project on each of the deployment servers.
-
-## Note
-Permissions are pretty important for all of this to work. If your deployment fails chances are it is due to
-permissions. Each of the projects I setup required me to create the plugin's folder on the deployment server and
-assign the proper ownership and permissions to it. Then when I built the project it deployed with no errors.
+After installing the plugin, you must run 
 ```shell
-mkdir example-plugin
-chown www-data:www-data example-plugin
-chmod 775 example-plugin
+composer update
 ```
+
+## Configuration
+Using the settings page, you must enter a YouTube API key, and a Layout JSON string.
+The shortcode will loop through the array putting `<div class="row">` around
+the top level of the array, and then will use the defined classes for the video
+ and caption elements.
+ 
+ Example JSON:
+ ```javascript
+[
+           {
+              "vid1":{
+                 "vidclass":"col-md-8 first",
+                 "captionclass":"videocaption"
+              },
+              "vid2":{
+                 "vidclass":"col-md-4 last",
+                 "captionclass":"videocaption"
+              },
+              "vid3":{
+                 "vidclass":"col-md-4 last",
+                 "captionclass":"videocaption"
+              }
+           },
+           {
+              "vid1":{
+                 "vidclass":"col-md-6 first",
+                 "captionclass":"videocaption"
+              },
+              "vid2":{
+                 "vidclass":"col-md-6 last",
+                 "captionclass":"videocaption"
+              }
+           }
+        ]
+```
+
+This wil create a row with three videos having classes col-md-8 first,
+col-md-4 last, and col-md-4 last. Then another row with two videos
+having class col-md-6 first and col-md-6 last.
+
+## Shortcode
+The shortcode looks like this:
+```html
+[truman-youtube-display playlistid="PLcYA3q7LpetDq6Qx3I_TS2Si5dU39lCez" random="false"]
+```
+
+The parameters are the playlistid and whether or not to display the videos in random order.
+The default is false.
