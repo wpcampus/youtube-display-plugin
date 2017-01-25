@@ -1,14 +1,8 @@
 {
-    "name": "its-web-wordpress/youtube-display-plugin",
-    "description": "Displays your YouTube videos.",
-    "minimum-stability": "stable",
-    "license": "proprietary",
-    "authors": [
-        {
-            "name": "Greg Marshall",
-            "email": "gmarsh@truman.edu"
-        }
-    ],
+    "name": "wpcampus/wpcampus-youtube-plugin",
+    "description": "Displays YouTube videos.",
+    "license": "GPL-2.0+",
+    "author": "WPCampus",
     "require-dev": {
         "squizlabs/php_codesniffer": "*",
         "wp-coding-standards/wpcs": "*"
