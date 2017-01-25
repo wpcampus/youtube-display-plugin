@@ -133,11 +133,13 @@ class TrumanYouTube {
 
 							?>
 							<div class="wpc-youtube-video <?php echo $value->vidclass; ?>">
-								<a class="popup-youtube" href="<?php echo $item['watch']; ?>">
-									<img src="<?php echo $item['thumbnail']; ?>" alt="YouTube thumbnail for <?php echo $item['title']; ?> video" />
-									<span class="play"></span>
-									<span class="vid-caption <?php echo $value->captionclass; ?>"><?php echo $item['title']; ?></span>
-								</a>
+								<div class="vid">
+									<a class="popup-youtube" href="<?php echo $item['watch']; ?>">
+										<img src="<?php echo $item['thumbnail']; ?>" alt="YouTube thumbnail for <?php echo $item['title']; ?> video" />
+										<span class="play"></span>
+										<span class="vid-caption <?php echo $value->captionclass; ?>"><?php echo $item['title']; ?></span>
+									</a>
+								</div>
 							</div>
 							<?php
 
